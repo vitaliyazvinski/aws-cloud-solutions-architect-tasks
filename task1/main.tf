@@ -256,59 +256,6 @@ resource "aws_lambda_event_source_mapping" "POC_Lambda_2" {
   starting_position = "LATEST"
 }
 
-# Task 8: Creating an API with Amazon API Gateway
-# In this task, you create a REST API in Amazon API Gateway. The API serves as a communication gateway between your application and the AWS services.
-
-# In the AWS Management Console, search for and open API Gateway.
-
-# On the REST API card with a public authentication, choose Build and configure the following settings:
-# Choose the protocol: REST
-# Create new API: New API
-# API name: POC-API
-# Endpoint Type: Regional
-# Choose Create API.
-
-# On the Actions menu, choose Create Method.
-
-# Open the method menu by choosing the down arrow, and choose POST. Save your changes by choosing the check mark.
-
-# In the POST - Setup pane, configure the following settings:
-# Integration type: AWS Service
-# AWS Region: us-east-1
-# AWS Service: Simple Queue Service (SQS)
-# AWS Subdomain: Keep empty
-# HTTP method: POST
-# Action Type: Use path override
-# Path override: Enter your account ID followed by a slash (/) and the name of the POC queue
-# Note: If POC-Queue is the name of the SQS queue that you created, this entry might look similar to the following: /<account ID>/POC-Queue
-# Execution role: Paste the ARN of the APIGateway-SQS role
-# Note: For example, the ARN might look like the following: arn:aws:iam::<account ID>:role/APIGateway-SQS
-# Content Handling: Passthrough
-# Save your changes.
-
-# Choose the Integration Request card.
-
-# Scroll to the bottom of the page and expand HTTP Headers.
-
-# Choose Add header.
-
-# For Name, enter Content-Type
-
-# For Mapped from, enter 'application/x-www-form-urlencoded'
-
-# Save your changes to the HTTP Headers section by choosing the check mark.
-
-# Expand Mapping Templates and for Request body passthrough, choose Never.
-
-# Choose Add mapping template and for Content-Type , enter application/json
-
-# Save your changes by choosing the check mark.
-
-# For Generate template, do not choose a default template from the list. Instead, enter the following command: Action=SendMessage&MessageBody=$input.body in a box.
-
-# Choose Save.
-
-
 resource "aws_api_gateway_rest_api" "POC_API" {
   name = "POC-API"
   endpoint_configuration {
